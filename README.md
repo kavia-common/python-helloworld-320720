@@ -1,40 +1,71 @@
 Hello, World
 ============
 
-A simple program, and an example of how to structure a python project. Demonstrates a basic package
-file structure (using [flat layout]) and a way to define a [single package version] shared between
-package metadata and program runtime.
+A minimal Python package and command-line tool that prints a friendly greeting. This repository demonstrates:
 
-See also: the Python Packaging User Guide at https://packaging.python.org/ offers more complete
-examples and explanations.
-
-[flat layout]: https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/
-[single package version]: https://packaging.python.org/en/latest/guides/single-sourcing-package-version/
+- A simple, installable Python package (`helloworld`)
+- A CLI entry point (`helloworld_in_python`)
+- Single-sourced package versioning from `helloworld/VERSION.txt`
+- Modern packaging via `pyproject.toml` + setuptools
 
 Basic usage
 -----------
 
-You can install the package using `pip` and then run the main script from the command line as
-`helloworld_in_python` or import it in python via `import helloworld`:
+Install and run:
 
 ```shell
-$ cd python-helloworld/  # Dir containing this repo's root
+$ cd python-helloworld-320720/
 $ pip install .
 $ helloworld_in_python
 Hello, world
-$ helloworld_in_python --version
-helloworld 0.1
-$ python
->>> import helloworld
->>> helloworld.__version__
-'0.1'
 ```
 
-You can also try it without installing by running `python helloworld.py` in the repository root:
+Show version:
+
+```shell
+$ helloworld_in_python --version
+helloworld 0.1
+```
+
+Run without installing
+----------------------
+
+You can run the top-level script directly:
 
 ```shell
 $ python helloworld.py
 Hello, world
-$ python helloworld.py --version
-helloworld 0.1
 ```
+
+Logging
+-------
+
+The CLI uses Python's standard `logging` module (to stderr). By default it logs at `INFO`.
+
+You can control the log level via the environment variable:
+
+- `HELLOWORLD_LOG_LEVEL` (e.g. `DEBUG`, `INFO`, `WARNING`, `ERROR`)
+
+Example:
+
+```shell
+$ HELLOWORLD_LOG_LEVEL=DEBUG helloworld_in_python
+Hello, world
+```
+
+Development notes
+-----------------
+
+- Version is read from `helloworld/VERSION.txt` at runtime and in packaging metadata.
+- The CLI entry point is configured in `pyproject.toml`:
+
+  - `helloworld_in_python = "helloworld.main:main"`
+
+References
+----------
+
+- Flat layout vs src layout:
+  https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/
+
+- Single-sourcing package version:
+  https://packaging.python.org/en/latest/guides/single-sourcing-package-version/
